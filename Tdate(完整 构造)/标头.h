@@ -22,7 +22,7 @@ class Tdate
 {
 public:
 	Tdate();
-	Tdate(int year, int month, int day, int sec, int min, int hour);//¼Ó²Î£¡£¡£¡£¡£¡
+	Tdate(int year, int month, int day, int sec, int min, int hour);//åŠ å‚ï¼ï¼ï¼ï¼ï¼
 	void print();
 	~Tdate()
 	{
