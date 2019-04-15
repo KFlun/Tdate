@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-#include"±кН·.h";
+#include"ж ‡е¤ґ.h";
 
 void fun(Tdate &a)
 {
