@@ -8,7 +8,19 @@
 类的初始运用，创建了一个Tdate类，并在类中添加了成员变量，成员函数。通过成员函数Set方法来对年份进行设置。
 ### 收获：  
 1、怎样构造一个类  
-2、类的在内存中的存储方式 ___（有待详解）___  
+2、类的大小与成员函数无关，由成员变量决定。例如下面的Tdate类：
+```
+class Tdate
+{
+ ……………………略
+private:
+	Time time;
+	int month;
+	int year;
+	int day;
+};
+```
+Tdate的大小 &emsp; = &emsp; 3*4+Time类的大小  
 3、成员函数的调用  
 4、闰年的计算方法  
 5、权限访问限制符的使用  
@@ -73,7 +85,7 @@ void Tdate::Set(int month, int day, int year, int sec, int min, int hour)
 ### 写法;
 1、使用含参构造函数对构造函数进行重载。直接使用含参构造函数进行对象实例化。  
 2、定义一个析构函数的表达。（析构函数无论是否定义都会在销毁一个对象实例的时候进行，只是平时看不到而已。类似于构造函数。）  
-析构函数的定义：（我们在这个项目中采用输出”run“字样的方式来观察析构函数的执行情况,Tdate同理）  
+定义析构函数：（我们在这个项目中采用输出”run“字样的方式来观察析构函数的执行情况,Tdate同理）  
 ```
 ~Time()
 	{
@@ -81,7 +93,8 @@ void Tdate::Set(int month, int day, int year, int sec, int min, int hour)
 	}
 ```
 ### 收获：
-1、在对含参构造函数进行重载的时候，实际上是默认进入了Time类型变量time的无参构造函数的。  
+1、逐语句调试程序时，析构函数和构造函数的调用是跳至定义语句行，其他函数的调用时跳至函数开始的“{}”符号处。
+2、在对含参构造函数进行重载的时候，实际上是默认进入了Time类型变量time的无参构造函数的。  
 调用含参构造函数  
 ```
 Tdate gtd(1968,9,17, 36, 56, 98);
@@ -121,7 +134,76 @@ Tdate::Tdate(int year, int month, int day, int sec, int min, int hour)
 
 //如果直接调用含参构造函数则会因为无法访问变量导致赋值失败，time依然为无参构造函数的值。
 ```
-上述创建临时变量a方式为暂行手段，能够达到目的但是不专业。 ***后续会更新更优秀的解决方案***  
+上述创建临时变量a方式为暂行手段，能够达到目的但是不专业。  
+**更专业的方式为：使用冒号语法（初始值列表）**  
+冒号语法：冒号表示后面要对数据成员进行初始化，如果是基本数据成员则使用括号内的实参进行赋初始值；如果是类数据成员则使用括号中的实参作为构造函数的形参嗲用。例如对上述代码进行改进：
+```
+class Tdate
+{
+public:
+	Tdate(int year, int month, int day, int sec, int min, int hour);
+	 ………………略
+private:
+	Time time;
+	int month;
+	int year;
+	int day;
+};
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)    //可以对多个参数进行赋值  ,year(year) 不会冲突吗？？不会！！
+{
+	this->year = year;
+	this->month = month;
+	this->day = day;
+	Time time(sec, min, hour);
+}
+```
+
+
 2、关于不用Set函数的解释：  
 &emsp;&emsp;这个方式太蠢了，而且一点都不专业，在对类进行初始化的时候都是直接使用构造函数的方式，Set函数的存在一般都是当我们想修改局部的属性的时候才调用。
+*********************************
+# _Tdate（默认参数的构造函数）_
+### 概述：
+在 *Tdate（完整 构造）* 的基础上定义了含默认参数的构造函数
+### 写法：
+对定义的构造函数添加默认参数。
+### 收获：
+1、默认参数在函数声明中提供，当又有声明又有定义时，定义中不允许默认参数。例如在当前项目中：
+```
+class Tdate
+{
+public:
+	Tdate(int year = 1970, int month = 1, int day = 1, int sec = 0, int min = 0, int hour = 0);
+	 …………………………略
+};
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour)
+{
+	 ……………………略
+}
+```
+2、含默认参数的构造函数本身具有默认构造函数的性质，所以不能再定义一个无参构造函数。同样不能有相同参数的其他重载函数。例如在当前项目中：  
+当存在如下含参构造函数后
+```
+class Tdate
+{
+public:
+	Tdate(int year = 1970, int month = 1, int day = 1, int sec = 0, int min = 0, int hour = 0);
+	 …………………………略
+};
+```
+不能同时存在如下构造函数:
+```
+class Tdate
+{
+public:
+	Tdate();
+	Tdate(int year, int month, int day, int sec, int min, int hour);//加参！！！！！
+	 …………………………略
+};
+```
+否则在调用时会产生调用不明（编译器不知道匹配哪一个函数）的情况。
 
+冒号语法给常量和引用进行初始化
+静态局部对象只被构造一次
+不同文件中的对象不知道谁先构造，相同文件中是按顺序构造的
+在冒号语法的运用中注意与成员变量初始化的顺序进行匹配
