@@ -136,7 +136,7 @@ Tdate::Tdate(int year, int month, int day, int sec, int min, int hour)
 ```
 上述创建临时变量a方式为暂行手段，能够达到目的但是不专业。  
 **更专业的方式为：使用冒号语法（初始值列表）**  
-冒号语法：冒号表示后面要对数据成员进行初始化，如果是基本数据成员则使用括号内的实参进行赋初始值；如果是类数据成员则使用括号中的实参作为构造函数的形参嗲用。例如对上述代码进行改进：
+1、冒号语法：冒号表示后面要对数据成员进行初始化，如果是基本数据成员则使用括号内的实参进行赋初始值；如果是类数据成员则使用括号中的实参作为构造函数的形参嗲用。例如对上述代码进行改进：
 ```
 class Tdate
 {
@@ -149,7 +149,15 @@ private:
 	int year;
 	int day;
 };
-Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)    //可以对多个参数进行赋值  ,year(year) 不会冲突吗？？不会！！
+
+Time::Time(int sec, int min, int hour)
+{
+	this->sec = sec;
+	this->min = min;
+	this->hour = hour;
+}
+
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)    //可以对多个参数进行赋值
 {
 	this->year = year;
 	this->month = month;
@@ -157,7 +165,35 @@ Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec
 	Time time(sec, min, hour);
 }
 ```
+冒号语法（初始值列表）：
+（1）冒号语法可为常量（const）和引用进行初始化，也可以为基本数据成员初始化。例如在上述例子中，Tdate的构造函数可以改成：
+```
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)，year(year),month(month),day(day)
+{
+	Time time(sec, min, hour);
+}
+//用冒号语法对基本数据变量进行初始化时，括号内为实参，外部名称为形参，这样使用的话，还是会在调用Tdate的构造函数后创建一个Time类型的局部变量
+```
+这样也是正确的：
+```
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)，year(year),month(month),day(day){};
+//这样则根本不会有Time类型的局部变量生成。
+```
+（2）在冒号语法的运用中注意与成员变量初始化的顺序进行匹配
+```
+class Tdate
+{
+ …………………………略
+private:
+	Time time;
+	int month;
+	int year;
+	int day;
+};
 
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour),day(3),month(3*day){}; //error
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour),month(3),day(3*month){}; //right
+```
 
 2、关于不用Set函数的解释：  
 &emsp;&emsp;这个方式太蠢了，而且一点都不专业，在对类进行初始化的时候都是直接使用构造函数的方式，Set函数的存在一般都是当我们想修改局部的属性的时候才调用。
@@ -202,8 +238,7 @@ public:
 };
 ```
 否则在调用时会产生调用不明（编译器不知道匹配哪一个函数）的情况。
-
-冒号语法给常量和引用进行初始化
+ 
 静态局部对象只被构造一次
 不同文件中的对象不知道谁先构造，相同文件中是按顺序构造的
-在冒号语法的运用中注意与成员变量初始化的顺序进行匹配
+
