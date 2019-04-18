@@ -115,7 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="标头.h" />
+    <ClInclude Include="head.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

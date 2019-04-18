@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-#include"БъЭЗ.h"
+#include"head.h"
 
 
 int main()
