@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-#include"±êÍ·.h"
+#include"æ ‡å¤´.h"
 
 void Tdate::print()
 {
@@ -20,12 +20,12 @@ Tdate::Tdate()
 //	this->year = year;
 //	this->month = month;
 //	this->day = day;
-//	Time a(sec, min, hour);        //ÔÚ½øÈëTdateÊ±¾ÍÒÑ¾­Ä¬ÈÏµ÷ÓÃÁËTimeµÄÎŞ²Î¹¹Ôìº¯Êı£¬ËùÒÔ½¨Á¢Ò»¸öĞÂµÄÁÙÊ±±äÁ¿
-//	time = a;                      //½«TdateµÄTimeÀàĞÍ³ÉÔ±±äÁ¿¸³ÖµÎªa
-//}                                //¸Ãº¯Êı½áÊøºó£¬±äÁ¿aµ÷ÓÃÎö¹¹º¯ÊıÏú»Ù£¬Êä³ö¡°run¡±
+//	Time a(sec, min, hour);        //åœ¨è¿›å…¥Tdateæ—¶å°±å·²ç»é»˜è®¤è°ƒç”¨äº†Timeçš„æ— å‚æ„é€ å‡½æ•°ï¼Œæ‰€ä»¥å»ºç«‹ä¸€ä¸ªæ–°çš„ä¸´æ—¶å˜é‡
+//	time = a;                      //å°†Tdateçš„Timeç±»å‹æˆå‘˜å˜é‡èµ‹å€¼ä¸ºa
+//}                                //è¯¥å‡½æ•°ç»“æŸåï¼Œå˜é‡aè°ƒç”¨ææ„å‡½æ•°é”€æ¯ï¼Œè¾“å‡ºâ€œrunâ€
 
-Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)    //¿ÉÒÔ¶Ô¶à¸ö²ÎÊı½øĞĞ¸³Öµ  ,year(year)²»»á³åÍ»Âğ£¿£¿
-{
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)    //å¯ä»¥å¯¹å¤šä¸ªå‚æ•°è¿›è¡Œèµ‹å€¼
+{                                                                                               
 	this->year = year;
 	this->month = month;
 	this->day = day;
