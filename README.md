@@ -8,7 +8,26 @@
 类的初始运用，创建了一个Tdate类，并在类中添加了成员变量，成员函数。通过成员函数Set方法来对年份进行设置。
 ### 收获：  
 1、怎样构造一个类  
-2、类的在内存中的存储方式 ___（有待详解）___  
+2、类的大小与成员函数无关，由成员变量决定。例如下面的Tdate类：
+```
+class Tdate
+{
+public:
+	Tdate();
+	Tdate(int year, int month, int day, int sec, int min, int hour);//加参！！！！！
+	void print();
+	~Tdate()
+	{
+		cout << "run" << endl;
+	}
+private:
+	Time time;
+	int month;
+	int year;
+	int day;
+};
+```
+Tdate的大小 &emsp; = &emsp; 3*4+Time类的大小  
 3、成员函数的调用  
 4、闰年的计算方法  
 5、权限访问限制符的使用  
@@ -125,3 +144,8 @@ Tdate::Tdate(int year, int month, int day, int sec, int min, int hour)
 2、关于不用Set函数的解释：  
 &emsp;&emsp;这个方式太蠢了，而且一点都不专业，在对类进行初始化的时候都是直接使用构造函数的方式，Set函数的存在一般都是当我们想修改局部的属性的时候才调用。
 
+//在类的外部对函数进行定义的时候，不能再重复声明默认值。
+	//默认参数在函数声明中提供，当又有声明又有定义时，定义中不允许默认参数
+	//1、含默认参数的构造函数本身具有默认构造函数的性质，所以不能再定义一个无参构造函数，
+//否则会冲突
+//2、含默认参数的构造函数本身不能再有相同参数的其他重载函数
