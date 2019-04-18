@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-#include"标头.h"
+#include"head.h"
 
 void Tdate::print()
 {
