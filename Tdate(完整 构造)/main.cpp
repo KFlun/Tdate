@@ -7,7 +7,7 @@ int main()
 {
 	Tdate ntd;
 	ntd.print();
-	Tdate gtd(1968,9,17, 36, 1, 54);
+	Tdate gtd(1968,9,17, 1, 1, 54);
 	gtd.print();
 	
 	system("pause");

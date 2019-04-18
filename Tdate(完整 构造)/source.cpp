@@ -24,7 +24,7 @@ Tdate::Tdate()
 //	time = a;                      //将Tdate的Time类型成员变量赋值为a
 //}                                //该函数结束后，变量a调用析构函数销毁，输出“run”
 
-Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)    //可以对多个参数进行赋值  ,year(year)不会冲突吗？？
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour), year(year), month(month), day(day)  //可以对多个参数进行赋值 
 {
 	this->year = year;
 	this->month = month;
