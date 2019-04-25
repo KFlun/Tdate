@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+	int n = 0;
 	Tdate ntd;
 	ntd.print();
 	Tdate gtd(1968,9,17, 1, 1, 54);

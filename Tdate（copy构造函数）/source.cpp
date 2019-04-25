@@ -13,23 +13,21 @@ Tdate::Tdate()
 	month = 5;
 	day = 2;
 	year = 2000;
-}
+}                
 
-//Tdate::Tdate(int year, int month, int day, int sec, int min, int hour)
-//{
-//	this->year = year;
-//	this->month = month;
-//	this->day = day;
-//	Time a(sec, min, hour);        
-//	time = a;                      
-//}                               
-
-Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)    
-{                                                                                               
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)
+{
 	this->year = year;
 	this->month = month;
 	this->day = day;
 	Time time(sec, min, hour);
+}
+
+Tdate::Tdate(int year, int month, int day, Time &time):time(time)
+{
+	this->year = year;
+	this->month = month;
+	this->day = day;
 }
 
 Time::Time()
@@ -37,6 +35,14 @@ Time::Time()
 	hour = 00;
 	min = 00;
 	sec = 00;
+}
+
+Time::Time(Time &time)
+{
+	cout << "Copy the time you set." << endl;
+	this->sec = time.sec;
+	this->min = time.min;
+	this->hour = time.hour;
 }
 
 void Time::print()
