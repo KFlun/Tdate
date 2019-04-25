@@ -162,7 +162,7 @@ Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec
 	this->year = year;
 	this->month = month;
 	this->day = day;
-	Time time(sec, min, hour);
+	 //Time time(sec, min, hour);time的值已经通过冒号语法进行初始化了，此处再定义一个time是一个与原来的time无关的局部局部变量。
 }
 ```
 冒号语法（初始值列表）：
@@ -238,7 +238,68 @@ public:
 };
 ```
 否则在调用时会产生调用不明（编译器不知道匹配哪一个函数）的情况。
- 
-静态局部对象只被构造一次
-不同文件中的对象不知道谁先构造，相同文件中是按顺序构造的
+ *****************************************************
+ # Tdate（copy构造函数）
+ ### 概述
+ 在 *Tdate（完整 构造）* 的基础上添加了copy构造函数。
+ ### 写法
+ 在Tdate类中定义一个copy构造函数。
+ ### 收获
+ 1、构造函数：  
+ （1）默认的构造函数  
+ （2）含参（有/无默认参数）的构造函数  
+ （3）copy构造函数  
+ 2、copy构造函数的作用  
+ （1）用一个对象的值初始化另一个对象  
+ （2）当对 *对象作为参数的函数* 进行调用时。函数参数的传递分为以下情况：  
+ &emsp;a.值传递（一般变量类型直接进行的值传递，指针的传递）  
+ &emsp;b.引用传递（引用符号的使用）
+ （3）当函数要返回对象类型时，需要通过copy构造函数建立一个临时的类类型变量  
+ 3、深copy和浅copy  
+ （1）在包含上述需要调用copy构造函数的场景中，如果没有定义的copy构造函数，则会调用C++默认给予的copy构造函数，该copy会将原类类型变量的所有属性copy到新的类类型变量中，并且如果在类中进行了堆内存的分配，新变量所指向的堆地址与旧变量指向的对地址相同。是为浅copy。  
+ （2）浅copy实际上是比较危险的，因为对同一个堆进行操作容易造成权限冲突等矛盾，所以当存在堆内存分配的情况时，我们必须要最好自行定义一个copy构造函数。
+静态局部对象只被构造一次。新变量有自己独自的内存空间的copy叫做深copy。  
+4、调用copy函数与原代码的对比  
+```
+*******mian.cpp**********
+int main()
+{
+	Tdate gtd(1968, 9, 17, 1, 1, 54);
+	
+	Time time(5, 2, 0);
+	Tdate copytime(1869, 9, 14, time);
+	
+	return 0;
+}
+
+*******head.h**********
+class Tdate
+{
+public:
+	Tdate(int year, int month, int day, int sec, int min, int hour);
+	Tdate(int year, int month, int day, Time &time);
+	 …………略
+};
+class Time
+{
+public:
+	Time(Time &time);
+	Time(int sec, int min, int hour);
+	 …………略
+};
+
+*******souce.cpp**********
+Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour)
+{
+	this->year = year;
+	this->month = month;
+	this->day = day;
+}
+Tdate::Tdate(int year, int month, int day, Time &time):time(time)
+{
+	this->year = year;
+	this->month = month;
+	this->day = day;
+}
+```
 
