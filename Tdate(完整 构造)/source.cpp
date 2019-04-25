@@ -29,7 +29,7 @@ Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec
 	this->year = year;
 	this->month = month;
 	this->day = day;
-	Time time(sec, min, hour);
+	//Time time(sec, min, hour);  ¼ûreadmeËµÃ÷
 }
 
 Time::Time()
