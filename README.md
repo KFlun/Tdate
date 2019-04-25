@@ -191,8 +191,8 @@ private:
 	int day;
 };
 
-Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour),day(3),month(3*day){}; //error
-Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour),month(3),day(3*month){}; //right
+**//error** Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour),day(3),month(3*day){}; 
+**//right** Tdate::Tdate(int year, int month, int day, int sec, int min, int hour) :time(sec, min, hour),month(3),day(3*month){}; 
 ```
 
 2、关于不用Set函数的解释：  
